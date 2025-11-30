@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Secret - VanishVault</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+        }
+
+        .secret-content {
+            background: #f8f9fa;
+            border: 2px solid #667eea;
+            border-radius: 8px;
+            padding: 1.5rem;
+            font-family: 'Courier New', monospace;
+            font-size: 1rem;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .danger-box {
+            background: #fee2e2;
+            border-left: 4px solid #dc2626;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 class="mb-0">
+                            <i class="bi bi-eye-fill me-2"></i>Secret Revealed
+                        </h1>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="danger-box mb-4">
+                            <h6 class="mb-2">
+                                <i class="bi bi-fire me-2"></i>This Secret Has Been Destroyed
+                            </h6>
+                            <p class="mb-0 small">
+                                This message has been <strong>permanently deleted</strong> from our servers.
+                                If you refresh this page, the secret will be gone forever.
+                                Make sure to save it now if you need it!
+                            </p>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-key-fill me-2"></i>Secret Content:
+                            </label>
+                            <div class="secret-content" id="secretContent"><span th:text="${secretContent}"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-4">
+                            <button class="btn btn-copy" onclick="copyToClipboard()">
+                                <i class="bi bi-clipboard me-2"></i>Copy Secret to Clipboard
+                            </button>
+                        </div>
+
+                        <div class="alert alert-warning" role="alert">
+                            <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                            <strong>Warning:</strong> This link is now dead. Refreshing or sharing this URL will result
+                            in a "Secret Not Found" error.
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+                            <a href="/" class="btn btn-outline-secondary">
+                                <i class="bi bi-house-fill me-2"></i>Return to Home
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyToClipboard() {
+            const secretText = document.getElementById('secretContent').innerText;
+            navigator.clipboard.writeText(secretText).then(() => {
+                const btn = event.target.closest('button');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Copied!';
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-copy');
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-copy');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>

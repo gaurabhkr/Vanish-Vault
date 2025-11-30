@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secret Link Created - VanishVault</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-header {
+            background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+            color: white;
+            border-radius: 15px 15px 0 0 !important;
+            padding: 1.5rem;
+        }
+
+        .secret-link-box {
+            background: #f8f9fa;
+            border: 2px dashed #667eea;
+            border-radius: 8px;
+            padding: 1rem;
+            word-break: break-all;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95rem;
+        }
+
+        .btn-copy {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border: none;
+            color: white;
+            padding: 10px 25px;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .btn-copy:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            color: white;
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="card">
+                    <div class="card-header text-center">
+                        <h1 class="mb-0">
+                            <i class="bi bi-check-circle-fill me-2"></i>Secret Link Created!
+                        </h1>
+                    </div>
+                    <div class="card-body p-4">
+                        <div class="alert alert-success" role="alert">
+                            <i class="bi bi-shield-check me-2"></i>
+                            Your secret has been encrypted and stored securely.
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">
+                                <i class="bi bi-link-45deg me-2"></i>Share this link:
+                            </label>
+                            <div class="secret-link-box" id="secretLink">
+                                <span th:text="${'http://localhost:8080' + secretUrl}"></span>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2 mb-4">
+                            <button class="btn btn-copy" onclick="copyToClipboard()">
+                                <i class="bi bi-clipboard me-2"></i>Copy Link to Clipboard
+                            </button>
+                        </div>
+
+                        <div class="warning-box">
+                            <h6 class="mb-2">
+                                <i class="bi bi-exclamation-triangle-fill me-2"></i>Important Warning
+                            </h6>
+                            <ul class="mb-0 small">
+                                <li>This link will <strong>only work ONCE</strong></li>
+                                <li>After the first view, the secret is <strong>permanently deleted</strong></li>
+                                <li>There is <strong>no way to recover</strong> the secret after it's viewed</li>
+                                <li>Make sure to send this link only to the intended recipient</li>
+                            </ul>
+                        </div>
+
+                        <hr class="my-4">
+
+                        <div class="text-center">
+                            <a href="/" class="btn btn-outline-secondary">
+                                <i class="bi bi-plus-circle me-2"></i>Create Another Secret
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function copyToClipboard() {
+            const linkText = document.getElementById('secretLink').innerText;
+            navigator.clipboard.writeText(linkText).then(() => {
+                const btn = event.target.closest('button');
+                const originalHTML = btn.innerHTML;
+                btn.innerHTML = '<i class="bi bi-check-lg me-2"></i>Copied!';
+                btn.classList.add('btn-success');
+                btn.classList.remove('btn-copy');
+
+                setTimeout(() => {
+                    btn.innerHTML = originalHTML;
+                    btn.classList.remove('btn-success');
+                    btn.classList.add('btn-copy');
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+
+</html>
