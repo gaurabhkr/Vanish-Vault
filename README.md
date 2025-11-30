@@ -2,6 +2,8 @@
 
 A secure web application for sharing sensitive information via self-destructing links. Built with Spring Boot and PostgreSQL.
 
+### 🚀 [Live Demo](https://vanishvault-bgi4.onrender.com/)
+
 ## Features
 
 - 🔥 **Self-Destructing Messages**: Secrets are permanently deleted after being viewed once
@@ -160,6 +162,7 @@ Refreshed the page after viewing. The application correctly returned a 404 error
 
 ⚠️ **Production Deployment**:
 - Store encryption keys securely (use environment variables or key vaults)
+- Set `APP_BASE_URL` environment variable to your deployed domain (e.g., `https://myapp.onrender.com`)
 - Use HTTPS in production
 - Configure proper CORS settings
 - Set up database backups
