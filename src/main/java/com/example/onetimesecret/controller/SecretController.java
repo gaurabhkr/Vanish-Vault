@@ -30,17 +30,11 @@ public class SecretController {
             UUID secretId = secretService.createSecret(secretText);
             
             // Generate the full URL for the secret
-            // Check for X-Forwarded-Host header (used by Render and other proxies)
-            String forwardedHost = request.getHeader("X-Forwarded-Host");
-            String forwardedProto = request.getHeader("X-Forwarded-Proto");
+            // Use APP_BASE_URL environment variable if set, otherwise build from request
+            String baseUrl = System.getenv("APP_BASE_URL");
             
-            String baseUrl;
-            if (forwardedHost != null && !forwardedHost.isEmpty()) {
-                // Use forwarded headers from proxy
-                String protocol = (forwardedProto != null && !forwardedProto.isEmpty()) ? forwardedProto : "https";
-                baseUrl = protocol + "://" + forwardedHost;
-            } else {
-                // Fallback to request details (for local development)
+            if (baseUrl == null || baseUrl.isEmpty()) {
+                // Fallback: build from request (for local development)
                 baseUrl = request.getScheme() + "://" + request.getServerName();
                 if ((request.getScheme().equals("http") && request.getServerPort() != 80) ||
                     (request.getScheme().equals("https") && request.getServerPort() != 443)) {
