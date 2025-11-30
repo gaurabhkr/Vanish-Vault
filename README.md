@@ -137,6 +137,25 @@ This project is a standard Maven application and works with all major Java IDEs 
 ### IntelliJ IDEA
 *   IntelliJ supports Maven and Lombok out of the box (ensure the Lombok plugin is enabled).
 
+## Verification Results
+
+The application has been fully tested and verified:
+
+### 1. Secret Creation
+Successfully created a secret message and generated a unique link.
+
+![Secret Created](docs/screenshots/secret-created.png)
+
+### 2. Secret Retrieval
+Navigated to the generated link and successfully viewed the decrypted secret.
+
+![Secret Revealed](docs/screenshots/secret-revealed.png)
+
+### 3. Self-Destruction
+Refreshed the page after viewing. The application correctly returned a 404 error, confirming the secret was deleted from the database.
+
+![Secret Destroyed](docs/screenshots/secret-destroyed.png)
+
 ## Important Notes
 
 ⚠️ **Production Deployment**:
